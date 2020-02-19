@@ -1,5 +1,8 @@
 <template>
   <div class="hello">
+    <h1>
+      <a href="#" @click.prevent="signout">log out</a>
+    </h1>
     <h1>{{ msg }}</h1>
     <p>
       For a guide and recipes on how to configure / customize this project,<br />
@@ -88,10 +91,22 @@
 
 <script>
 export default {
-  name: "HelloWorld",
+  name: 'HelloWorld',
   props: {
-    msg: String
-  }
+    msg: String,
+  },
+  methods: {
+    signout() {
+      const api = `${process.env.VUE_APP_PATH}/logout`;
+      const vm = this;
+      this.$http.post(api).then(res => {
+        console.log(res.data);
+        if (res.data.success) {
+          vm.$router.push('/login');
+        }
+      });
+    },
+  },
 };
 </script>
 
