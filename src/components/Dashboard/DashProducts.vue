@@ -163,7 +163,8 @@ import $ from "jquery";
 export default {
   data() {
     return {
-      products: []
+      products: [],
+      tempProduct: {}
     };
   },
   methods: {
