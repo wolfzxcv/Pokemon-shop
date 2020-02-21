@@ -19,6 +19,7 @@
 
 <script>
 export default {
+  name: "DashNav",
   methods: {
     signout() {
       const api = `${process.env.VUE_APP_PATH}/logout`;
@@ -26,7 +27,7 @@ export default {
       this.$http.post(api).then(res => {
         console.log(res.data);
         if (res.data.success) {
-          vm.$router.push("/");
+          vm.$router.push("/login");
         }
       });
     }
