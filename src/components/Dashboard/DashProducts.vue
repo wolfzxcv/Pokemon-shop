@@ -2,7 +2,9 @@
   <div>
     <loading :active.sync="isLoading" />
     <div class="text-right mt-4">
-      <button class="btn btn-primary" @click="openModal(true)">Add New Product</button>
+      <button class="btn btn-primary" @click="openModal(true)">
+        Add New Product
+      </button>
     </div>
 
     <table class="table mt-4">
@@ -28,10 +30,20 @@
             <span v-else>disabled</span>
           </td>
           <td>
-            <button class="btn btn-outline-primary btn-sm" @click="openModal(false, x)">Edit</button>
+            <button
+              class="btn btn-outline-primary btn-sm"
+              @click="openModal(false, x)"
+            >
+              Edit
+            </button>
           </td>
           <td>
-            <button class="btn btn-outline-danger btn-sm" @click="openDeleteModal(x)">Delete</button>
+            <button
+              class="btn btn-outline-danger btn-sm"
+              @click="openDeleteModal(x)"
+            >
+              Delete
+            </button>
           </td>
         </tr>
       </tbody>
@@ -41,12 +53,12 @@
 
     <nav aria-label="Page navigation example">
       <ul class="pagination">
-        <li class="page-item" :class="{'disabled': !pagination.has_pre}">
+        <li class="page-item" :class="{ disabled: !pagination.has_pre }">
           <a
             class="page-link"
             href="#"
             aria-label="Previous"
-            @click.prevent="getProducts(pagination.current_page -1)"
+            @click.prevent="getProducts(pagination.current_page - 1)"
           >
             <span aria-hidden="true">&laquo;</span>
           </a>
@@ -55,17 +67,19 @@
           class="page-item"
           v-for="page in pagination.total_pages"
           :key="page"
-          :class="{'active': pagination.current_page===page}"
+          :class="{ active: pagination.current_page === page }"
         >
-          <a class="page-link" href="#" @click.prevent="getProducts(page)">{{page}}</a>
+          <a class="page-link" href="#" @click.prevent="getProducts(page)">{{
+            page
+          }}</a>
         </li>
 
-        <li class="page-item" :class="{'disabled':!pagination.has_next}">
+        <li class="page-item" :class="{ disabled: !pagination.has_next }">
           <a
             class="page-link"
             href="#"
             aria-label="Next"
-            @click.prevent="getProducts(pagination.current_page +1)"
+            @click.prevent="getProducts(pagination.current_page + 1)"
           >
             <span aria-hidden="true">&raquo;</span>
           </a>
@@ -90,7 +104,12 @@
             <h5 class="modal-title" id="exampleModalLabel">
               <span>New Product</span>
             </h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -110,7 +129,10 @@
                 <div class="form-group">
                   <label for="customFile">
                     Or Upload image
-                    <i class="fas fa-spinner fa-spin" v-if="status.fileUploading"></i>
+                    <i
+                      class="fas fa-spinner fa-spin"
+                      v-if="status.fileUploading"
+                    ></i>
                   </label>
 
                   <input
@@ -217,15 +239,29 @@
                       :true-value="1"
                       :false-value="0"
                     />
-                    <label class="form-check-label" for="is_enabled">Enabled</label>
+                    <label class="form-check-label" for="is_enabled"
+                      >Enabled</label
+                    >
                   </div>
                 </div>
               </div>
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
-            <button type="button" class="btn btn-outline-primary" @click="updateProduct">Submit</button>
+            <button
+              type="button"
+              class="btn btn-outline-secondary"
+              data-dismiss="modal"
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              class="btn btn-outline-primary"
+              @click="updateProduct"
+            >
+              Submit
+            </button>
           </div>
         </div>
       </div>
@@ -247,7 +283,12 @@
             <h5 class="modal-title" id="exampleModalLabel">
               <span>Delete Product</span>
             </h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -257,8 +298,16 @@
             (Can't recover after deleted)
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
-            <button type="button" class="btn btn-danger" @click="deleteProduct">Confirm deletion</button>
+            <button
+              type="button"
+              class="btn btn-outline-secondary"
+              data-dismiss="modal"
+            >
+              Cancel
+            </button>
+            <button type="button" class="btn btn-danger" @click="deleteProduct">
+              Confirm deletion
+            </button>
           </div>
         </div>
       </div>
@@ -269,7 +318,7 @@
 </template>
 
 <script>
-import $ from "jquery";
+import $ from 'jquery';
 
 export default {
   data() {
@@ -280,8 +329,8 @@ export default {
       isNewProduct: false,
       isLoading: false,
       status: {
-        fileUploading: false
-      }
+        fileUploading: false,
+      },
     };
   },
   methods: {
@@ -306,10 +355,10 @@ export default {
         this.tempProduct = Object.assign({}, item);
         this.isNewProduct = false;
       }
-      $("#dashProductModal").modal("show");
+      $('#dashProductModal').modal('show');
     },
     openDeleteModal(item) {
-      $("#delProductModal").modal("show");
+      $('#delProductModal').modal('show');
       this.tempProduct = Object.assign({}, item);
     },
     deleteProduct() {
@@ -321,29 +370,29 @@ export default {
         vm.getProducts();
         // vm.products = res.data.products;
       });
-      $("#delProductModal").modal("hide");
+      $('#delProductModal').modal('hide');
     },
     updateProduct() {
       let api = `${process.env.VUE_APP_PATH}/api/${process.env.VUE_APP_CUSTOM}/admin/product`;
-      let httpMethod = "post";
+      let httpMethod = 'post';
 
       const vm = this;
-      $("#dashProductModal").modal("hide");
+      $('#dashProductModal').modal('hide');
       vm.getProducts();
 
       if (!vm.isNewProduct) {
         api = `${process.env.VUE_APP_PATH}/api/${process.env.VUE_APP_CUSTOM}/admin/product/${vm.tempProduct.id}`;
-        httpMethod = "put";
+        httpMethod = 'put';
       }
       this.$http[httpMethod](api, { data: vm.tempProduct }).then(res => {
         console.log(res.data);
         if (res.data.success) {
-          $("#dashProductModal").modal("hide");
+          $('#dashProductModal').modal('hide');
           vm.getProducts();
         } else {
-          $("#dashProductModal").modal("hide");
+          $('#dashProductModal').modal('hide');
           vm.getProducts();
-          console.log("Adding failed");
+          console.log('Adding failed');
         }
       });
     },
@@ -352,29 +401,29 @@ export default {
       const uploadedFile = this.$refs.files.files[0];
       const vm = this;
       const formData = new FormData();
-      formData.append("file-to-upload", uploadedFile);
+      formData.append('file-to-upload', uploadedFile);
       const url = `${process.env.VUE_APP_PATH}/api/${process.env.VUE_APP_CUSTOM}/admin/upload`;
       vm.status.fileUploading = true;
       this.$http
         .post(url, formData, {
           headers: {
-            "Content-Type": "multipart/form-data"
-          }
+            'Content-Type': 'multipart/form-data',
+          },
         })
         .then(res => {
           console.log(res.data);
           vm.status.fileUploading = false;
           if (res.data.success) {
-            vm.$set(vm.tempProduct, "imageUrl", res.data.imageUrl);
+            vm.$set(vm.tempProduct, 'imageUrl', res.data.imageUrl);
           } else {
-            this.$bus.$emit("message:push", res.data.message, "danger");
+            this.$bus.$emit('message:push', res.data.message, 'danger');
           }
         });
-    }
+    },
   },
 
   created() {
     this.getProducts();
-  }
+  },
 };
 </script>
