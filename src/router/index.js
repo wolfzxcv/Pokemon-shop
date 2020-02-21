@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 import Login from '../components/Login/Login.vue';
 import DashBoard from '../components/Dashboard/Dashboard.vue';
 import DashProducts from '../components/Dashboard/DashProducts.vue';
+import DashOrders from '../components/Dashboard/DashOrders.vue';
 
 Vue.use(VueRouter);
 
@@ -20,6 +21,12 @@ const routes = [
         path: 'products',
         name: 'DashProducts',
         component: DashProducts,
+        meta: { requiresAuth: true },
+      },
+      {
+        path: 'orders',
+        name: 'DashOrders',
+        component: DashOrders,
         meta: { requiresAuth: true },
       },
     ],

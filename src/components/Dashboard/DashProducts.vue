@@ -1,5 +1,6 @@
 <template>
   <div>
+    <loading :active.sync="isLoading" />
     <div class="text-right mt-4">
       <button class="btn btn-primary" @click="openModal(true)">Add New Product</button>
     </div>
@@ -20,8 +21,8 @@
         <tr v-for="x in products" :key="x.id">
           <td>{{ x.category }}</td>
           <td>{{ x.title }}</td>
-          <td class="text-right">{{ x.origin_price }}</td>
-          <td class="text-right">{{ x.price }}</td>
+          <td class="text-right">{{ x.origin_price | currency }}</td>
+          <td class="text-right">{{ x.price | currency }}</td>
           <td>
             <span v-if="x.is_enabled" class="text-success">enabled</span>
             <span v-else>disabled</span>
@@ -35,6 +36,44 @@
         </tr>
       </tbody>
     </table>
+
+    <!---Pagination start-->
+
+    <nav aria-label="Page navigation example">
+      <ul class="pagination">
+        <li class="page-item" :class="{'disabled': !pagination.has_pre}">
+          <a
+            class="page-link"
+            href="#"
+            aria-label="Previous"
+            @click.prevent="getProducts(pagination.current_page -1)"
+          >
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        <li
+          class="page-item"
+          v-for="page in pagination.total_pages"
+          :key="page"
+          :class="{'active': pagination.current_page===page}"
+        >
+          <a class="page-link" href="#" @click.prevent="getProducts(page)">{{page}}</a>
+        </li>
+
+        <li class="page-item" :class="{'disabled':!pagination.has_next}">
+          <a
+            class="page-link"
+            href="#"
+            aria-label="Next"
+            @click.prevent="getProducts(pagination.current_page +1)"
+          >
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <!--Pagination end-->
 
     <!-- Product Modal -->
     <div
@@ -71,7 +110,7 @@
                 <div class="form-group">
                   <label for="customFile">
                     Or Upload image
-                    <i class="fas fa-spinner fa-spin"></i>
+                    <i class="fas fa-spinner fa-spin" v-if="status.fileUploading"></i>
                   </label>
 
                   <input
@@ -214,7 +253,8 @@
           </div>
           <div class="modal-body">
             Are you sure you want to delete
-            <strong class="text-danger">{{ tempProduct.title }}</strong> ? (Can't recover after deleted)
+            <strong class="text-danger">{{ tempProduct.title }}</strong> ?
+            (Can't recover after deleted)
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
@@ -235,28 +275,36 @@ export default {
   data() {
     return {
       products: [],
+      pagination: {},
       tempProduct: {},
-      isNewProduct: false
+      isNewProduct: false,
+      isLoading: false,
+      status: {
+        fileUploading: false
+      }
     };
   },
   methods: {
-    getProducts() {
-      const api = `${process.env.VUE_APP_PATH}/api/${process.env.VUE_APP_CUSTOM}/products`;
+    getProducts(page = 1) {
+      const api = `${process.env.VUE_APP_PATH}/api/${process.env.VUE_APP_CUSTOM}/products?page=${page}`;
 
       const vm = this;
+      vm.isLoading = true;
 
       this.$http.get(api).then(res => {
         console.log(res.data);
+        vm.isLoading = false;
         vm.products = res.data.products;
+        vm.pagination = res.data.pagination;
       });
     },
     openModal(isNewProduct, item) {
       if (isNewProduct) {
         this.tempProduct = {};
-        // this.isNewProduct=true;
+        this.isNewProduct = true;
       } else {
         this.tempProduct = Object.assign({}, item);
-        // this.isNewProduct=false;
+        this.isNewProduct = false;
       }
       $("#dashProductModal").modal("show");
     },
@@ -306,6 +354,7 @@ export default {
       const formData = new FormData();
       formData.append("file-to-upload", uploadedFile);
       const url = `${process.env.VUE_APP_PATH}/api/${process.env.VUE_APP_CUSTOM}/admin/upload`;
+      vm.status.fileUploading = true;
       this.$http
         .post(url, formData, {
           headers: {
@@ -314,8 +363,11 @@ export default {
         })
         .then(res => {
           console.log(res.data);
+          vm.status.fileUploading = false;
           if (res.data.success) {
             vm.$set(vm.tempProduct, "imageUrl", res.data.imageUrl);
+          } else {
+            this.$bus.$emit("message:push", res.data.message, "danger");
           }
         });
     }
