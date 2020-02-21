@@ -1,6 +1,7 @@
 <template>
   <div>
     <DashNav />
+    <AlertMsg />
     <div class="container-fluid">
       <div class="row">
         <DashSide />
@@ -13,13 +14,15 @@
 </template>
 
 <script>
-import DashNav from './DashNav';
-import DashSide from './DashSide';
+import DashNav from "./DashNav";
+import DashSide from "./DashSide";
+import AlertMsg from "../AlertMsg";
 
 export default {
   components: {
     DashNav,
     DashSide,
-  },
+    AlertMsg
+  }
 };
 </script>

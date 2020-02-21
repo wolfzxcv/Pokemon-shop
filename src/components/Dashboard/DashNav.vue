@@ -10,9 +10,27 @@
       />
       <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
-          <a class="nav-link" href="#">Sign out</a>
+          <a class="nav-link" href="#" @click.prevent="signout">Sign out</a>
         </li>
       </ul>
     </nav>
   </div>
 </template>
+
+<script>
+export default {
+  name: "DashNav",
+  methods: {
+    signout() {
+      const api = `${process.env.VUE_APP_PATH}/logout`;
+      const vm = this;
+      this.$http.post(api).then(res => {
+        console.log(res.data);
+        if (res.data.success) {
+          vm.$router.push("/login");
+        }
+      });
+    }
+  }
+};
+</script>
