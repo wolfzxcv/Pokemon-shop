@@ -28,7 +28,7 @@ router.beforeEach((to, from, next) => {
     const api = `${process.env.VUE_APP_PATH}/api/user/check`;
 
     axios.post(api).then(res => {
-      console.log(res.data);
+      console.log('check if login', res.data.success);
       if (res.data.success) {
         next();
       } else {

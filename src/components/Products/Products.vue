@@ -145,7 +145,6 @@ export default {
         vm.getCart();
         $("#productDetailModal").modal("hide");
       });
-      console.log(id, qty);
     },
     getCart() {
       const vm = this;

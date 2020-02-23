@@ -49,7 +49,7 @@ export default {
       const vm = this;
 
       this.$http.post(api, vm.user).then(res => {
-        console.log(res.data);
+        console.log("signin", res.data);
         if (res.data.success) {
           vm.$router.push("/admin/products");
         }

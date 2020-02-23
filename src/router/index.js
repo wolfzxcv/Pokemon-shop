@@ -4,6 +4,7 @@ import Login from '../components/Login/Login.vue';
 import DashBoard from '../components/Dashboard/Dashboard.vue';
 import DashProducts from '../components/Dashboard/DashProducts.vue';
 import DashOrders from '../components/Dashboard/DashOrders.vue';
+import DashCoupons from '../components/Dashboard/DashCoupons.vue';
 import Products from '../components/Products/Products.vue';
 import CartContent from '../components/Cart/CartContent.vue';
 import PageNotFound from '../components/PageNotFound/PageNotFound.vue';
@@ -44,6 +45,12 @@ const routes = [
         path: 'orders',
         name: 'DashOrders',
         component: DashOrders,
+        meta: { requiresAuth: true },
+      },
+      {
+        path: 'coupons',
+        name: 'DashCoupons',
+        component: DashCoupons,
         meta: { requiresAuth: true },
       },
     ],
