@@ -37,44 +37,7 @@
     </table>
 
     <!---Pagination start-->
-
-    <nav aria-label="Page navigation example">
-      <ul class="pagination">
-        <li class="page-item" :class="{ disabled: !pagination.has_pre }">
-          <a
-            class="page-link"
-            href="#"
-            aria-label="Previous"
-            @click.prevent="getCoupons(pagination.current_page - 1)"
-          >
-            <span aria-hidden="true">&laquo;</span>
-          </a>
-        </li>
-        <li
-          class="page-item"
-          v-for="page in pagination.total_pages"
-          :key="page"
-          :class="{ active: pagination.current_page === page }"
-        >
-          <a class="page-link" href="#" @click.prevent="getCoupons(page)">
-            {{
-            page
-            }}
-          </a>
-        </li>
-
-        <li class="page-item" :class="{ disabled: !pagination.has_next }">
-          <a
-            class="page-link"
-            href="#"
-            aria-label="Next"
-            @click.prevent="getCoupons(pagination.current_page + 1)"
-          >
-            <span aria-hidden="true">&raquo;</span>
-          </a>
-        </li>
-      </ul>
-    </nav>
+    <Pagination :pages="pagination" @emitPages="getCoupons" />
 
     <!--Pagination end-->
 
@@ -210,6 +173,7 @@
 
 <script>
 import $ from "jquery";
+import Pagination from "../Pagination/Pagination";
 
 export default {
   data() {
@@ -221,6 +185,7 @@ export default {
       isLoading: false
     };
   },
+  components: { Pagination },
   methods: {
     getCoupons(page = 1) {
       const api = `${process.env.VUE_APP_PATH}/api/${process.env.VUE_APP_CUSTOM}/admin/coupons?page=${page}`;

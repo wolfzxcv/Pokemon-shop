@@ -6,14 +6,17 @@ import 'vue-loading-overlay/dist/vue-loading.css';
 import 'bootstrap';
 import App from './App.vue';
 import router from './router';
-import './bus';
+import './components/alertMessage/bus';
 import currencyFilter from './components/filters/currency';
+import { ValidationProvider, ValidationObserver } from 'vee-validate';
 
 Vue.config.productionTip = false;
 Vue.use(VueAxios, axios);
 
 Vue.component('Loading', Loading);
 Vue.filter('currency', currencyFilter);
+Vue.component('ValidationObserver', ValidationObserver);
+Vue.component('ValidationProvider', ValidationProvider);
 
 axios.defaults.withCredentials = true;
 

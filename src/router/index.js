@@ -7,6 +7,7 @@ import DashOrders from '../components/Dashboard/DashOrders.vue';
 import DashCoupons from '../components/Dashboard/DashCoupons.vue';
 import Products from '../components/Products/Products.vue';
 import CartContent from '../components/Cart/CartContent.vue';
+import Checkout from '../components/Checkout/Checkout.vue';
 import PageNotFound from '../components/PageNotFound/PageNotFound.vue';
 
 Vue.use(VueRouter);
@@ -30,6 +31,8 @@ const routes = [
     name: 'Products',
     component: Products,
   },
+  { path: '/cart', name: 'CartContent', component: CartContent },
+  { path: '/checkout/:orderId', name: 'Checkout', component: Checkout },
   {
     path: '/admin',
     name: 'DashBoard',
@@ -60,7 +63,7 @@ const routes = [
     // component: () =>
     //   import(/* webpackChunkName: "about" */ '../views/About.vue'),
   },
-  { path: '/cart', name: 'CartContent', component: CartContent },
+
   {
     path: '/404',
     name: 'PageNotFound',
@@ -69,6 +72,7 @@ const routes = [
 ];
 
 const router = new VueRouter({
+  linkActiveClass: 'active',
   routes,
 });
 

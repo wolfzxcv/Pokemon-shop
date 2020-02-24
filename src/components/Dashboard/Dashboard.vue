@@ -16,7 +16,7 @@
 <script>
 import DashNav from "./DashNav";
 import DashSide from "./DashSide";
-import AlertMsg from "../AlertMsg";
+import AlertMsg from "../alertMessage/AlertMsg";
 
 export default {
   components: {

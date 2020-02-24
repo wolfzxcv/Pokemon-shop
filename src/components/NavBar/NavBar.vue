@@ -3,7 +3,7 @@
     <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
       <li class="nav-item">
         <router-link
-          class="nav-link active"
+          class="nav-link"
           id="pills-home-tab"
           data-toggle="pill"
           href="#pills-home"

@@ -1,6 +1,8 @@
 <template>
   <div class="cart-content">
     <loading :active.sync="isLoading" />
+
+    <!--Cart's detail-->
     <table class="table mt-4">
       <thead>
         <tr>
@@ -24,22 +26,24 @@
           <td>{{ x.qty }}</td>
           <td class="text-right">{{ x.total }}</td>
         </tr>
-        <tr v-if="order.carts.length==0">
+        <tr v-if="order.carts">
           <td></td>
           <td class="text-center">Oops! The cart is empty!!</td>
         </tr>
       </tbody>
       <tfoot>
         <tr>
-          <td colspan="3" class="text-right">總計</td>
+          <td colspan="3" class="text-right">Total</td>
           <td class="text-right">{{ order.total }}</td>
         </tr>
-        <tr v-if="order.final_total !==order.total">
-          <td colspan="3" class="text-right text-success">折扣價</td>
+        <tr v-if="order.final_total !== order.total">
+          <td colspan="3" class="text-right text-success">Special price</td>
           <td class="text-right text-success">{{ order.final_total }}</td>
         </tr>
       </tfoot>
     </table>
+
+    <!--Coupon code input form-->
     <div class="input-group mb-3 input-group-sm">
       <input
         type="text"
@@ -51,6 +55,89 @@
         <button class="btn btn-outline-secondary" type="button" @click="addCouponCode">Validate</button>
       </div>
     </div>
+
+    <!--Recipient's information-->
+    <div class="my-5 row justify-content-center">
+      <form class="col-md-6" @submit.prevent="placeOrder">
+        <div class="form-group">
+          <label for="useremail">Email</label>
+          <ValidationProvider rules="email" v-slot="{ errors }">
+            <input
+              type="email"
+              class="form-control"
+              name="email"
+              id="useremail"
+              v-model="form.user.email"
+              placeholder="Please enter your Email"
+              required
+            />
+            <span class="text-danger">{{ errors[0] }}</span>
+          </ValidationProvider>
+        </div>
+
+        <div class="form-group">
+          <label for="username">Name</label>
+          <ValidationProvider rules="required" v-slot="{ errors }">
+            <input
+              type="text"
+              class="form-control"
+              name="name"
+              id="username"
+              v-model="form.user.name"
+              placeholder="Please enter your name"
+              required
+            />
+            <span class="text-danger">{{ errors[0] }}</span>
+          </ValidationProvider>
+        </div>
+
+        <div class="form-group">
+          <label for="usertel">TEL (number only)</label>
+          <ValidationProvider rules="numeric" v-slot="{ errors }">
+            <input
+              type="tel"
+              class="form-control"
+              id="usertel"
+              v-model="form.user.tel"
+              placeholder="Please enter your phone number"
+              required
+            />
+            <span class="text-danger">{{ errors[0] }}</span>
+          </ValidationProvider>
+        </div>
+
+        <div class="form-group">
+          <label for="useraddress">Address</label>
+          <ValidationProvider rules="required" v-slot="{ errors }">
+            <input
+              type="text"
+              class="form-control"
+              name="address"
+              id="useraddress"
+              v-model="form.user.address"
+              placeholder="Please enter your address"
+              required
+            />
+            <span class="text-danger">{{ errors[0] }}</span>
+          </ValidationProvider>
+        </div>
+
+        <div class="form-group">
+          <label for="comment">Message</label>
+          <textarea
+            name
+            id="comment"
+            class="form-control"
+            cols="30"
+            rows="5"
+            v-model="form.message"
+          ></textarea>
+        </div>
+        <div class="text-right">
+          <button class="btn btn-danger">Place the order</button>
+        </div>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -60,7 +147,16 @@ export default {
     return {
       order: [],
       isLoading: false,
-      coupon_code: ""
+      coupon_code: "",
+      form: {
+        user: {
+          name: "",
+          email: "",
+          tel: "",
+          address: ""
+        },
+        message: ""
+      }
     };
   },
   methods: {
@@ -95,6 +191,22 @@ export default {
         console.log("addCouponCode", res.data);
         vm.isLoading = false;
         vm.getCart();
+      });
+    },
+    placeOrder() {
+      const vm = this;
+      const api = `${process.env.VUE_APP_PATH}/api/${process.env.VUE_APP_CUSTOM}/order`;
+      const order = vm.form;
+      vm.isLoading = true;
+      this.$http.post(api, { data: order }).then(res => {
+        console.log("placeOrder", res.data);
+        if (res.data.success) {
+          vm.$router.push(`/checkout/${res.data.orderId}`);
+          console.log("redirect to checkout page");
+          vm.isLoading = false;
+        } else {
+          console.log("lacking some guest info");
+        }
       });
     }
   },
