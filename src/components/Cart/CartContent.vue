@@ -61,7 +61,7 @@
       <form class="col-md-6" @submit.prevent="placeOrder">
         <div class="form-group">
           <label for="useremail">Email</label>
-          <ValidationProvider rules="email" v-slot="{ errors }">
+          <ValidationProvider rules="required|email" v-slot="{ errors }">
             <input
               type="email"
               class="form-control"
