@@ -1,6 +1,6 @@
 <template>
   <div class="cart-content">
-    <loading :active.sync="isLoading" />
+    <Loading :active.sync="isLoading" />
 
     <!--Cart's detail-->
     <table class="table mt-4">
