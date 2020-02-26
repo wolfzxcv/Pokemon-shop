@@ -7,7 +7,5 @@ module.exports = {
   parserOptions: {
     parser: 'babel-eslint',
   },
-  rules: {
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-  },
+  rules: {},
 };
