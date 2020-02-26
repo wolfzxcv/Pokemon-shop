@@ -85,6 +85,7 @@ export default {
         console.log("payOrder", res.data);
         if (res.data.success) {
           vm.getOrder();
+          vm.$bus.$emit("message:push", res.data.message, "success");
         }
         vm.isLoading = false;
       });

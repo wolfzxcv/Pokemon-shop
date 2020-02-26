@@ -206,6 +206,7 @@ export default {
 
       this.$http.delete(api).then(res => {
         console.log("deleteCoupon", res.data);
+        vm.$bus.$emit("message:push", res.data.message, "success");
         vm.getCoupons();
       });
       $("#delCouponModal").modal("hide");
@@ -226,9 +227,11 @@ export default {
         console.log("AddNewCoupon", res.data);
         if (res.data.success) {
           $("#dashCouponModal").modal("hide");
+          vm.$bus.$emit("message:push", res.data.message, "success");
           vm.getCoupons();
         } else {
           $("#dashCouponModal").modal("hide");
+          vm.$bus.$emit("message:push", res.data.message, "danger");
           vm.getCoupons();
           console.log("Adding Coupon failed");
         }

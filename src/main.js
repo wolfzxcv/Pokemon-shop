@@ -6,7 +6,7 @@ import 'vue-loading-overlay/dist/vue-loading.css';
 import 'bootstrap';
 import App from './App.vue';
 import router from './router';
-import './components/alertMessage/bus';
+import './bus';
 import currencyFilter from './components/filters/currency';
 import { ValidationProvider } from 'vee-validate';
 import { extend } from 'vee-validate';

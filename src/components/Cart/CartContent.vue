@@ -178,6 +178,7 @@ export default {
         console.log("removeCartItem", res.data);
         vm.isLoading = false;
         vm.getCart();
+        vm.$bus.$emit("message:push", res.data.message, "success");
       });
     },
     addCouponCode() {
@@ -189,6 +190,7 @@ export default {
       vm.isLoading = true;
       this.$http.post(api, { data: coupon }).then(res => {
         console.log("addCouponCode", res.data);
+        vm.$bus.$emit("message:push", res.data.message, "success");
         vm.isLoading = false;
         vm.getCart();
       });
@@ -202,9 +204,11 @@ export default {
         console.log("placeOrder", res.data);
         if (res.data.success) {
           vm.$router.push(`/checkout/${res.data.orderId}`);
+          vm.$bus.$emit("message:push", res.data.message, "success");
           console.log("redirect to checkout page");
           vm.isLoading = false;
         } else {
+          vm.$bus.$emit("message:push", res.data.message, "danger");
           console.log("lacking some guest info");
         }
       });

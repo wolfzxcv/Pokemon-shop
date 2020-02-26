@@ -141,6 +141,7 @@ export default {
       };
       this.$http.post(api, { data: cart }).then(res => {
         console.log("addToCart", res.data);
+        vm.$bus.$emit("message:push", res.data.message, "success");
         vm.status.loadingItem = "";
         vm.getCart();
         $("#productDetailModal").modal("hide");

@@ -21,10 +21,9 @@
 
 <script>
 export default {
-  name: 'Navbar',
   data() {
     return {
-      messages: [],
+      messages: []
     };
   },
   methods: {
@@ -33,7 +32,7 @@ export default {
       this.messages.push({
         message,
         status,
-        timestamp,
+        timestamp
       });
       this.removeMessageWithTiming(timestamp);
     },
@@ -49,18 +48,18 @@ export default {
           }
         });
       }, 5000);
-    },
+    }
   },
   created() {
     const vm = this;
     // 自定義名稱 'messsage:push'
     // message: 傳入參數
     // status: 樣式，預設值為 warning
-    vm.$bus.$on('message:push', (message, status = 'warning') => {
+    vm.$bus.$on("message:push", (message, status = "warning") => {
       vm.updateMessage(message, status);
     });
-    // vm.$bus.$emit('message:push');
-  },
+    // vm.$bus.$emit("message:push", "a message", "success");
+  }
 };
 </script>
 

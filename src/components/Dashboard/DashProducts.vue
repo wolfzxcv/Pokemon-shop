@@ -276,6 +276,7 @@ export default {
 
       this.$http.delete(api).then(res => {
         console.log("deleteProduct", res.data);
+        vm.$bus.$emit("message:push", res.data.message, "success");
         vm.getProducts();
       });
       $("#delProductModal").modal("hide");
@@ -296,9 +297,11 @@ export default {
         console.log("AddNewProduct", res.data);
         if (res.data.success) {
           $("#dashProductModal").modal("hide");
+          vm.$bus.$emit("message:push", res.data.message, "success");
           vm.getProducts();
         } else {
           $("#dashProductModal").modal("hide");
+          vm.$bus.$emit("message:push", res.data.message, "danger");
           vm.getProducts();
           console.log("Adding failed");
         }
