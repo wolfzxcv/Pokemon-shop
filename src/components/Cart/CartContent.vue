@@ -93,7 +93,7 @@
 
         <div class="form-group">
           <label for="usertel">TEL (number only)</label>
-          <ValidationProvider rules="numeric" v-slot="{ errors }">
+          <ValidationProvider rules="numeric|min:8" v-slot="{ errors }">
             <input
               type="tel"
               class="form-control"
@@ -108,7 +108,7 @@
 
         <div class="form-group">
           <label for="useraddress">Address</label>
-          <ValidationProvider rules="required" v-slot="{ errors }">
+          <ValidationProvider name="address" rules="required" v-slot="{ errors }">
             <input
               type="text"
               class="form-control"
