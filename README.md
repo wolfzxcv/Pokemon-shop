@@ -1,6 +1,7 @@
 # pikashop
 
-23
+trying vue by building an e-commerce website
+[You can see the website here](https://wolfzxcv.github.io/Pokemon-shop).
 
 ## Project setup
 
