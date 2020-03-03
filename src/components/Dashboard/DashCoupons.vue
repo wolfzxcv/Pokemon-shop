@@ -2,7 +2,9 @@
   <div>
     <loading :active.sync="isLoading" />
     <div class="text-right mt-4">
-      <button class="btn btn-primary" @click="openCouponModal(true)">Add New Coupon</button>
+      <button class="btn btn-primary" @click="openCouponModal(true)">
+        Add New Coupon
+      </button>
     </div>
     <table class="table mt-4">
       <thead>
@@ -21,16 +23,26 @@
           <td>{{ x.title }}</td>
           <td>{{ x.code }}</td>
           <td>{{ x.percent }}</td>
-          <td>{{ new Date(x.due_date*1000).toLocaleDateString("en-GB") }}</td>
+          <td>{{ new Date(x.due_date * 1000).toLocaleDateString('en-GB') }}</td>
           <td>
             <span v-if="x.is_enabled" class="text-success">enabled</span>
             <span v-else>disabled</span>
           </td>
           <td>
-            <button class="btn btn-outline-primary btn-sm" @click="openCouponModal(false, x)">Edit</button>
+            <button
+              class="btn btn-outline-primary btn-sm"
+              @click="openCouponModal(false, x)"
+            >
+              Edit
+            </button>
           </td>
           <td>
-            <button class="btn btn-outline-danger btn-sm" @click="openDeleteCouponModal(x)">Delete</button>
+            <button
+              class="btn btn-outline-danger btn-sm"
+              @click="openDeleteCouponModal(x)"
+            >
+              Delete
+            </button>
           </td>
         </tr>
       </tbody>
@@ -57,7 +69,12 @@
             <h5 class="modal-title" id="exampleModalLabel">
               <span>Coupon's detail</span>
             </h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -120,14 +137,28 @@
                     :true-value="1"
                     :false-value="0"
                   />
-                  <label class="form-check-label" for="is_enabled">Enabled</label>
+                  <label class="form-check-label" for="is_enabled"
+                    >Enabled</label
+                  >
                 </div>
               </div>
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
-            <button type="button" class="btn btn-outline-primary" @click="updateCoupon">Submit</button>
+            <button
+              type="button"
+              class="btn btn-outline-secondary"
+              data-dismiss="modal"
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              class="btn btn-outline-primary"
+              @click="updateCoupon"
+            >
+              Submit
+            </button>
           </div>
         </div>
       </div>
@@ -150,18 +181,31 @@
             <h5 class="modal-title" id="exampleModalLabel">
               <span>Delete Coupon</span>
             </h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
             Are you sure you want to delete
-            <strong class="text-danger">{{ tempCoupon.title }}</strong> ?
-            (Can't recover after deleted)
+            <strong class="text-danger">{{ tempCoupon.title }}</strong> ? (Can't
+            recover after deleted)
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
-            <button type="button" class="btn btn-danger" @click="deleteCoupon">Confirm deletion</button>
+            <button
+              type="button"
+              class="btn btn-outline-secondary"
+              data-dismiss="modal"
+            >
+              Cancel
+            </button>
+            <button type="button" class="btn btn-danger" @click="deleteCoupon">
+              Confirm deletion
+            </button>
           </div>
         </div>
       </div>
@@ -172,8 +216,8 @@
 </template>
 
 <script>
-import $ from "jquery";
-import Pagination from "../Pagination/Pagination";
+import $ from 'jquery'
+import Pagination from '../Pagination/Pagination'
 
 export default {
   data() {
@@ -183,77 +227,77 @@ export default {
       pagination: {},
       isNewCoupon: false,
       isLoading: false
-    };
+    }
   },
   components: { Pagination },
   methods: {
     getCoupons(page = 1) {
-      const api = `${process.env.VUE_APP_PATH}/api/${process.env.VUE_APP_CUSTOM}/admin/coupons?page=${page}`;
+      const api = `${process.env.VUE_APP_PATH}/api/${process.env.VUE_APP_CUSTOM}/admin/coupons?page=${page}`
 
-      const vm = this;
-      vm.isLoading = true;
+      const vm = this
+      vm.isLoading = true
 
-      this.$http.get(api).then(res => {
-        console.log("getCoupons", res.data);
-        vm.isLoading = false;
-        vm.coupons = res.data.coupons;
-        vm.pagination = res.data.pagination;
-      });
+      this.$http.get(api).then((res) => {
+        console.log('getCoupons', res.data)
+        vm.isLoading = false
+        vm.coupons = res.data.coupons
+        vm.pagination = res.data.pagination
+      })
     },
     deleteCoupon() {
-      const vm = this;
-      const api = `${process.env.VUE_APP_PATH}/api/${process.env.VUE_APP_CUSTOM}/admin/coupon/${this.tempCoupon.id}`;
+      const vm = this
+      const api = `${process.env.VUE_APP_PATH}/api/${process.env.VUE_APP_CUSTOM}/admin/coupon/${this.tempCoupon.id}`
 
-      this.$http.delete(api).then(res => {
-        console.log("deleteCoupon", res.data);
-        vm.$bus.$emit("message:push", res.data.message, "success");
-        vm.getCoupons();
-      });
-      $("#delCouponModal").modal("hide");
+      this.$http.delete(api).then((res) => {
+        console.log('deleteCoupon', res.data)
+        vm.$bus.$emit('message:push', res.data.message, 'success')
+        vm.getCoupons()
+      })
+      $('#delCouponModal').modal('hide')
     },
     updateCoupon() {
-      let api = `${process.env.VUE_APP_PATH}/api/${process.env.VUE_APP_CUSTOM}/admin/coupon`;
-      let httpMethod = "post";
+      let api = `${process.env.VUE_APP_PATH}/api/${process.env.VUE_APP_CUSTOM}/admin/coupon`
+      let httpMethod = 'post'
 
-      const vm = this;
-      $("#dashCouponModal").modal("hide");
-      vm.getCoupons();
+      const vm = this
+      $('#dashCouponModal').modal('hide')
+      vm.getCoupons()
 
       if (!vm.isNewCoupon) {
-        api = `${process.env.VUE_APP_PATH}/api/${process.env.VUE_APP_CUSTOM}/admin/coupon/${vm.tempCoupon.id}`;
-        httpMethod = "put";
+        api = `${process.env.VUE_APP_PATH}/api/${process.env.VUE_APP_CUSTOM}/admin/coupon/${vm.tempCoupon.id}`
+        httpMethod = 'put'
       }
-      this.$http[httpMethod](api, { data: vm.tempCoupon }).then(res => {
-        console.log("AddNewCoupon", res.data);
+      this.$http[httpMethod](api, { data: vm.tempCoupon }).then((res) => {
+        console.log('AddNewCoupon', res.data)
         if (res.data.success) {
-          $("#dashCouponModal").modal("hide");
-          vm.$bus.$emit("message:push", res.data.message, "success");
-          vm.getCoupons();
+          $('#dashCouponModal').modal('hide')
+          vm.$bus.$emit('message:push', res.data.message, 'success')
+          vm.getCoupons()
         } else {
-          $("#dashCouponModal").modal("hide");
-          vm.$bus.$emit("message:push", res.data.message, "danger");
-          vm.getCoupons();
-          console.log("Adding Coupon failed");
+          $('#dashCouponModal').modal('hide')
+          vm.$bus.$emit('message:push', res.data.message, 'danger')
+          vm.getCoupons()
+          console.log('Adding Coupon failed')
         }
-      });
+      })
     },
     openCouponModal(isNewCoupon, item) {
       if (isNewCoupon) {
-        this.tempCoupon = {};
-        this.isNewCoupon = true;
+        this.tempCoupon = {}
+        this.isNewCoupon = true
       } else {
-        this.tempCoupon = Object.assign({}, item);
-        this.isNewCoupon = false;
+        this.tempCoupon = Object.assign({}, item)
+        this.isNewCoupon = false
       }
-      $("#dashCouponModal").modal("show");
+      $('#dashCouponModal').modal('show')
     },
     openDeleteCouponModal(item) {
-      $("#delCouponModal").modal("show");
-      this.tempCoupon = Object.assign({}, item);
+      $('#delCouponModal').modal('show')
+      this.tempCoupon = Object.assign({}, item)
     }
   },
   created() {
-    this.getCoupons();
+    this.getCoupons()
   }
-};
+}
 </script>

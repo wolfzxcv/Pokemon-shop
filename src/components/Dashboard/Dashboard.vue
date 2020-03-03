@@ -13,13 +13,13 @@
 </template>
 
 <script>
-import DashNav from "./DashNav";
-import DashSide from "./DashSide";
+import DashNav from './DashNav'
+import DashSide from './DashSide'
 
 export default {
   components: {
     DashNav,
     DashSide
   }
-};
+}
 </script>

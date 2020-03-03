@@ -63,37 +63,37 @@ export default {
       order: {
         user: {}
       },
-      orderId: ""
-    };
+      orderId: ''
+    }
   },
   methods: {
     getOrder() {
-      const vm = this;
-      const api = `${process.env.VUE_APP_PATH}/api/${process.env.VUE_APP_CUSTOM}/order/${vm.orderId}`;
-      vm.isLoading = true;
-      this.$http.get(api).then(res => {
-        console.log("getOrder", res.data);
-        vm.order = res.data.order;
-        vm.isLoading = false;
-      });
+      const vm = this
+      const api = `${process.env.VUE_APP_PATH}/api/${process.env.VUE_APP_CUSTOM}/order/${vm.orderId}`
+      vm.isLoading = true
+      this.$http.get(api).then((res) => {
+        console.log('getOrder', res.data)
+        vm.order = res.data.order
+        vm.isLoading = false
+      })
     },
     payOrder() {
-      const vm = this;
-      const api = `${process.env.VUE_APP_PATH}/api/${process.env.VUE_APP_CUSTOM}/pay/${vm.orderId}`;
-      vm.isLoading = true;
-      this.$http.post(api).then(res => {
-        console.log("payOrder", res.data);
+      const vm = this
+      const api = `${process.env.VUE_APP_PATH}/api/${process.env.VUE_APP_CUSTOM}/pay/${vm.orderId}`
+      vm.isLoading = true
+      this.$http.post(api).then((res) => {
+        console.log('payOrder', res.data)
         if (res.data.success) {
-          vm.getOrder();
-          vm.$bus.$emit("message:push", res.data.message, "success");
+          vm.getOrder()
+          vm.$bus.$emit('message:push', res.data.message, 'success')
         }
-        vm.isLoading = false;
-      });
+        vm.isLoading = false
+      })
     }
   },
   created() {
-    this.orderId = this.$route.params.orderId;
-    this.getOrder();
+    this.orderId = this.$route.params.orderId
+    this.getOrder()
   }
-};
+}
 </script>

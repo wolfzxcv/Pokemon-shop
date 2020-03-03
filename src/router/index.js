@@ -1,35 +1,35 @@
-import Vue from 'vue';
-import VueRouter from 'vue-router';
-import Login from '../components/Login/Login.vue';
-import DashBoard from '../components/Dashboard/Dashboard.vue';
-import DashProducts from '../components/Dashboard/DashProducts.vue';
-import DashOrders from '../components/Dashboard/DashOrders.vue';
-import DashCoupons from '../components/Dashboard/DashCoupons.vue';
-import Products from '../components/Products/Products.vue';
-import CartContent from '../components/Cart/CartContent.vue';
-import Checkout from '../components/Checkout/Checkout.vue';
-import PageNotFound from '../components/PageNotFound/PageNotFound.vue';
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import Login from '../components/Login/Login.vue'
+import DashBoard from '../components/Dashboard/Dashboard.vue'
+import DashProducts from '../components/Dashboard/DashProducts.vue'
+import DashOrders from '../components/Dashboard/DashOrders.vue'
+import DashCoupons from '../components/Dashboard/DashCoupons.vue'
+import Products from '../components/Products/Products.vue'
+import CartContent from '../components/Cart/CartContent.vue'
+import Checkout from '../components/Checkout/Checkout.vue'
+import PageNotFound from '../components/PageNotFound/PageNotFound.vue'
 
-Vue.use(VueRouter);
+Vue.use(VueRouter)
 
 const routes = [
   {
     path: '*',
-    redirect: '404',
+    redirect: '404'
   },
   {
     path: '/',
-    redirect: 'login',
+    redirect: 'login'
   },
   {
     path: '/login',
     name: 'Login',
-    component: Login,
+    component: Login
   },
   {
     path: '/products',
     name: 'Products',
-    component: Products,
+    component: Products
   },
   { path: '/cart', name: 'CartContent', component: CartContent },
   { path: '/checkout/:orderId', name: 'Checkout', component: Checkout },
@@ -42,21 +42,21 @@ const routes = [
         path: 'products',
         name: 'DashProducts',
         component: DashProducts,
-        meta: { requiresAuth: true },
+        meta: { requiresAuth: true }
       },
       {
         path: 'orders',
         name: 'DashOrders',
         component: DashOrders,
-        meta: { requiresAuth: true },
+        meta: { requiresAuth: true }
       },
       {
         path: 'coupons',
         name: 'DashCoupons',
         component: DashCoupons,
-        meta: { requiresAuth: true },
-      },
-    ],
+        meta: { requiresAuth: true }
+      }
+    ]
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
@@ -67,13 +67,13 @@ const routes = [
   {
     path: '/404',
     name: 'PageNotFound',
-    component: PageNotFound,
-  },
-];
+    component: PageNotFound
+  }
+]
 
 const router = new VueRouter({
   linkActiveClass: 'active',
-  routes,
-});
+  routes
+})
 
-export default router;
+export default router

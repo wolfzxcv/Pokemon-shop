@@ -18,9 +18,7 @@
         :class="{ active: pages.current_page === page }"
       >
         <a class="page-link" href="#" @click.prevent="updatePage(page)">
-          {{
-          page
-          }}
+          {{ page }}
         </a>
       </li>
 
@@ -42,12 +40,12 @@
 // :pages="{ 頁碼資訊 }"
 // @emitPages="更新頁面事件"
 export default {
-  props: ["pages"],
+  props: ['pages'],
   methods: {
     updatePage(page) {
-      this.$emit("emitPages", page);
-      console.log("pagination emit!");
+      this.$emit('emitPages', page)
+      console.log('pagination emit!')
     }
   }
-};
+}
 </script>

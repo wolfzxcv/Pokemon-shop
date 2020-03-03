@@ -7,18 +7,18 @@
 </template>
 
 <script>
-import NavBar from "./components/NavBar/NavBar";
-import AlertMsg from "./components/alertMessage/AlertMsg";
+import NavBar from './components/NavBar/NavBar'
+import AlertMsg from './components/alertMessage/AlertMsg'
 
 export default {
-  name: "App",
+  name: 'App',
   components: {
     NavBar,
     AlertMsg
   }
-};
+}
 </script>
 
 <style lang="scss">
-@import "./assets/all";
+@import './assets/all';
 </style>

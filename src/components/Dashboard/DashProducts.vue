@@ -2,7 +2,9 @@
   <div>
     <loading :active.sync="isLoading" />
     <div class="text-right mt-4">
-      <button class="btn btn-primary" @click="openModal(true)">Add New Product</button>
+      <button class="btn btn-primary" @click="openModal(true)">
+        Add New Product
+      </button>
     </div>
 
     <table class="table mt-4">
@@ -28,10 +30,20 @@
             <span v-else>disabled</span>
           </td>
           <td>
-            <button class="btn btn-outline-primary btn-sm" @click="openModal(false, x)">Edit</button>
+            <button
+              class="btn btn-outline-primary btn-sm"
+              @click="openModal(false, x)"
+            >
+              Edit
+            </button>
           </td>
           <td>
-            <button class="btn btn-outline-danger btn-sm" @click="openDeleteModal(x)">Delete</button>
+            <button
+              class="btn btn-outline-danger btn-sm"
+              @click="openDeleteModal(x)"
+            >
+              Delete
+            </button>
           </td>
         </tr>
       </tbody>
@@ -58,7 +70,12 @@
             <h5 class="modal-title" id="exampleModalLabel">
               <span>Product's detail</span>
             </h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -78,7 +95,10 @@
                 <div class="form-group">
                   <label for="customFile">
                     Or Upload image
-                    <i class="fas fa-spinner fa-spin" v-if="status.fileUploading"></i>
+                    <i
+                      class="fas fa-spinner fa-spin"
+                      v-if="status.fileUploading"
+                    ></i>
                   </label>
 
                   <input
@@ -185,15 +205,29 @@
                       :true-value="1"
                       :false-value="0"
                     />
-                    <label class="form-check-label" for="is_enabled">Enabled</label>
+                    <label class="form-check-label" for="is_enabled"
+                      >Enabled</label
+                    >
                   </div>
                 </div>
               </div>
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
-            <button type="button" class="btn btn-outline-primary" @click="updateProduct">Submit</button>
+            <button
+              type="button"
+              class="btn btn-outline-secondary"
+              data-dismiss="modal"
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              class="btn btn-outline-primary"
+              @click="updateProduct"
+            >
+              Submit
+            </button>
           </div>
         </div>
       </div>
@@ -215,7 +249,12 @@
             <h5 class="modal-title" id="exampleModalLabel">
               <span>Delete Product</span>
             </h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -225,8 +264,16 @@
             (Can't recover after deleted)
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
-            <button type="button" class="btn btn-danger" @click="deleteProduct">Confirm deletion</button>
+            <button
+              type="button"
+              class="btn btn-outline-secondary"
+              data-dismiss="modal"
+            >
+              Cancel
+            </button>
+            <button type="button" class="btn btn-danger" @click="deleteProduct">
+              Confirm deletion
+            </button>
           </div>
         </div>
       </div>
@@ -237,8 +284,8 @@
 </template>
 
 <script>
-import $ from "jquery";
-import Pagination from "../Pagination/Pagination";
+import $ from 'jquery'
+import Pagination from '../Pagination/Pagination'
 
 export default {
   data() {
@@ -251,102 +298,102 @@ export default {
       status: {
         fileUploading: false
       }
-    };
+    }
   },
   components: {
     Pagination
   },
   methods: {
     getProducts(page = 1) {
-      const api = `${process.env.VUE_APP_PATH}/api/${process.env.VUE_APP_CUSTOM}/products?page=${page}`;
+      const api = `${process.env.VUE_APP_PATH}/api/${process.env.VUE_APP_CUSTOM}/products?page=${page}`
 
-      const vm = this;
-      vm.isLoading = true;
+      const vm = this
+      vm.isLoading = true
 
-      this.$http.get(api).then(res => {
-        console.log("getProducts", res.data);
-        vm.isLoading = false;
-        vm.products = res.data.products;
-        vm.pagination = res.data.pagination;
-      });
+      this.$http.get(api).then((res) => {
+        console.log('getProducts', res.data)
+        vm.isLoading = false
+        vm.products = res.data.products
+        vm.pagination = res.data.pagination
+      })
     },
     deleteProduct() {
-      const vm = this;
-      const api = `${process.env.VUE_APP_PATH}/api/${process.env.VUE_APP_CUSTOM}/admin/product/${this.tempProduct.id}`;
+      const vm = this
+      const api = `${process.env.VUE_APP_PATH}/api/${process.env.VUE_APP_CUSTOM}/admin/product/${this.tempProduct.id}`
 
-      this.$http.delete(api).then(res => {
-        console.log("deleteProduct", res.data);
-        vm.$bus.$emit("message:push", res.data.message, "success");
-        vm.getProducts();
-      });
-      $("#delProductModal").modal("hide");
+      this.$http.delete(api).then((res) => {
+        console.log('deleteProduct', res.data)
+        vm.$bus.$emit('message:push', res.data.message, 'success')
+        vm.getProducts()
+      })
+      $('#delProductModal').modal('hide')
     },
     updateProduct() {
-      let api = `${process.env.VUE_APP_PATH}/api/${process.env.VUE_APP_CUSTOM}/admin/product`;
-      let httpMethod = "post";
+      let api = `${process.env.VUE_APP_PATH}/api/${process.env.VUE_APP_CUSTOM}/admin/product`
+      let httpMethod = 'post'
 
-      const vm = this;
-      $("#dashProductModal").modal("hide");
-      vm.getProducts();
+      const vm = this
+      $('#dashProductModal').modal('hide')
+      vm.getProducts()
 
       if (!vm.isNewProduct) {
-        api = `${process.env.VUE_APP_PATH}/api/${process.env.VUE_APP_CUSTOM}/admin/product/${vm.tempProduct.id}`;
-        httpMethod = "put";
+        api = `${process.env.VUE_APP_PATH}/api/${process.env.VUE_APP_CUSTOM}/admin/product/${vm.tempProduct.id}`
+        httpMethod = 'put'
       }
-      this.$http[httpMethod](api, { data: vm.tempProduct }).then(res => {
-        console.log("AddNewProduct", res.data);
+      this.$http[httpMethod](api, { data: vm.tempProduct }).then((res) => {
+        console.log('AddNewProduct', res.data)
         if (res.data.success) {
-          $("#dashProductModal").modal("hide");
-          vm.$bus.$emit("message:push", res.data.message, "success");
-          vm.getProducts();
+          $('#dashProductModal').modal('hide')
+          vm.$bus.$emit('message:push', res.data.message, 'success')
+          vm.getProducts()
         } else {
-          $("#dashProductModal").modal("hide");
-          vm.$bus.$emit("message:push", res.data.message, "danger");
-          vm.getProducts();
-          console.log("Adding failed");
+          $('#dashProductModal').modal('hide')
+          vm.$bus.$emit('message:push', res.data.message, 'danger')
+          vm.getProducts()
+          console.log('Adding failed')
         }
-      });
+      })
     },
     uploadFile() {
-      const uploadedFile = this.$refs.files.files[0];
-      const vm = this;
-      const formData = new FormData();
-      formData.append("file-to-upload", uploadedFile);
-      const url = `${process.env.VUE_APP_PATH}/api/${process.env.VUE_APP_CUSTOM}/admin/upload`;
-      vm.status.fileUploading = true;
+      const uploadedFile = this.$refs.files.files[0]
+      const vm = this
+      const formData = new FormData()
+      formData.append('file-to-upload', uploadedFile)
+      const url = `${process.env.VUE_APP_PATH}/api/${process.env.VUE_APP_CUSTOM}/admin/upload`
+      vm.status.fileUploading = true
       this.$http
         .post(url, formData, {
           headers: {
-            "Content-Type": "multipart/form-data"
+            'Content-Type': 'multipart/form-data'
           }
         })
-        .then(res => {
-          console.log("uploadFile", res.data);
-          vm.status.fileUploading = false;
+        .then((res) => {
+          console.log('uploadFile', res.data)
+          vm.status.fileUploading = false
           if (res.data.success) {
-            vm.$set(vm.tempProduct, "imageUrl", res.data.imageUrl);
+            vm.$set(vm.tempProduct, 'imageUrl', res.data.imageUrl)
           } else {
-            this.$bus.$emit("message:push", res.data.message, "danger");
+            this.$bus.$emit('message:push', res.data.message, 'danger')
           }
-        });
+        })
     },
     openModal(isNewProduct, item) {
       if (isNewProduct) {
-        this.tempProduct = {};
-        this.isNewProduct = true;
+        this.tempProduct = {}
+        this.isNewProduct = true
       } else {
-        this.tempProduct = Object.assign({}, item);
-        this.isNewProduct = false;
+        this.tempProduct = Object.assign({}, item)
+        this.isNewProduct = false
       }
-      $("#dashProductModal").modal("show");
+      $('#dashProductModal').modal('show')
     },
     openDeleteModal(item) {
-      $("#delProductModal").modal("show");
-      this.tempProduct = Object.assign({}, item);
+      $('#delProductModal').modal('show')
+      this.tempProduct = Object.assign({}, item)
     }
   },
   created() {
-    this.getProducts();
+    this.getProducts()
   }
-};
+}
 </script>

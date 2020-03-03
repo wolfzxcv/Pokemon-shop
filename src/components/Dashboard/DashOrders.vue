@@ -14,7 +14,9 @@
       </thead>
       <tbody>
         <tr v-for="x in orders" :key="x.id">
-          <td>{{ new Date(x.create_at*1000).toLocaleDateString("en-GB") }}</td>
+          <td>
+            {{ new Date(x.create_at * 1000).toLocaleDateString('en-GB') }}
+          </td>
           <td>{{ x.id }}</td>
           <td>{{ x.user.email }}</td>
           <td>
@@ -41,32 +43,32 @@
 </template>
 
 <script>
-import Pagination from "../Pagination/Pagination";
+import Pagination from '../Pagination/Pagination'
 export default {
   data() {
     return {
       orders: [],
       pagination: {},
       isLoading: false
-    };
+    }
   },
   components: { Pagination },
   methods: {
     getOrders(page = 1) {
-      const vm = this;
-      const api = `${process.env.VUE_APP_PATH}/api/${process.env.VUE_APP_CUSTOM}/admin/orders?page=${page}`;
-      vm.isLoading = true;
+      const vm = this
+      const api = `${process.env.VUE_APP_PATH}/api/${process.env.VUE_APP_CUSTOM}/admin/orders?page=${page}`
+      vm.isLoading = true
 
-      this.$http.get(api).then(res => {
-        console.log("getOrders", res.data);
-        vm.isLoading = false;
-        vm.orders = res.data.orders;
-        vm.pagination = res.data.pagination;
-      });
+      this.$http.get(api).then((res) => {
+        console.log('getOrders', res.data)
+        vm.isLoading = false
+        vm.orders = res.data.orders
+        vm.pagination = res.data.pagination
+      })
     }
   },
   created() {
-    this.getOrders();
+    this.getOrders()
   }
-};
+}
 </script>

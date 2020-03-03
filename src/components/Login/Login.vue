@@ -26,7 +26,9 @@
           <input type="checkbox" value="remember-me" /> Remember me
         </label>
       </div>
-      <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+      <button class="btn btn-lg btn-primary btn-block" type="submit">
+        Sign in
+      </button>
       <p class="mt-5 mb-3 text-muted">&copy; 2020</p>
     </form>
   </div>
@@ -34,29 +36,29 @@
 
 <script>
 export default {
-  name: "Login",
+  name: 'Login',
   data() {
     return {
       user: {
-        username: "",
-        password: ""
+        username: '',
+        password: ''
       }
-    };
+    }
   },
   methods: {
     signin() {
-      const api = `${process.env.VUE_APP_PATH}/admin/signin`;
-      const vm = this;
+      const api = `${process.env.VUE_APP_PATH}/admin/signin`
+      const vm = this
 
-      this.$http.post(api, vm.user).then(res => {
-        console.log("signin", res.data);
+      this.$http.post(api, vm.user).then((res) => {
+        console.log('signin', res.data)
         if (res.data.success) {
-          vm.$router.push("/admin/products");
+          vm.$router.push('/admin/products')
         }
-      });
+      })
     }
   }
-};
+}
 </script>
 
 <style scoped>
@@ -94,12 +96,12 @@ body {
 .form-signin .form-control:focus {
   z-index: 2;
 }
-.form-signin input[type="email"] {
+.form-signin input[type='email'] {
   margin-bottom: -1px;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
 }
-.form-signin input[type="password"] {
+.form-signin input[type='password'] {
   margin-bottom: 10px;
   border-top-left-radius: 0;
   border-top-right-radius: 0;

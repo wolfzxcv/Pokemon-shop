@@ -15,7 +15,10 @@
       <tbody>
         <tr v-for="x in order.carts" :key="x.id">
           <td>
-            <button class="btn btn-outline-danger btn-sm" @click="removeCartItem(x.id)">
+            <button
+              class="btn btn-outline-danger btn-sm"
+              @click="removeCartItem(x.id)"
+            >
               <i class="fas fa-trash-alt"></i>
             </button>
           </td>
@@ -52,7 +55,13 @@
         placeholder="Please enter coupon code"
       />
       <div class="input-group-append">
-        <button class="btn btn-outline-secondary" type="button" @click="addCouponCode">Validate</button>
+        <button
+          class="btn btn-outline-secondary"
+          type="button"
+          @click="addCouponCode"
+        >
+          Validate
+        </button>
       </div>
     </div>
 
@@ -108,7 +117,11 @@
 
         <div class="form-group">
           <label for="useraddress">Address</label>
-          <ValidationProvider name="address" rules="required" v-slot="{ errors }">
+          <ValidationProvider
+            name="address"
+            rules="required"
+            v-slot="{ errors }"
+          >
             <input
               type="text"
               class="form-control"
@@ -147,77 +160,77 @@ export default {
     return {
       order: [],
       isLoading: false,
-      coupon_code: "",
+      coupon_code: '',
       form: {
         user: {
-          name: "",
-          email: "",
-          tel: "",
-          address: ""
+          name: '',
+          email: '',
+          tel: '',
+          address: ''
         },
-        message: ""
+        message: ''
       }
-    };
+    }
   },
   methods: {
     getCart() {
-      const vm = this;
-      const api = `${process.env.VUE_APP_PATH}/api/${process.env.VUE_APP_CUSTOM}/cart`;
-      vm.isLoading = true;
-      this.$http.get(api).then(res => {
-        console.log("getCart", res.data.data);
-        vm.order = res.data.data;
-        vm.isLoading = false;
-      });
+      const vm = this
+      const api = `${process.env.VUE_APP_PATH}/api/${process.env.VUE_APP_CUSTOM}/cart`
+      vm.isLoading = true
+      this.$http.get(api).then((res) => {
+        console.log('getCart', res.data.data)
+        vm.order = res.data.data
+        vm.isLoading = false
+      })
     },
     removeCartItem(id) {
-      const vm = this;
-      const api = `${process.env.VUE_APP_PATH}/api/${process.env.VUE_APP_CUSTOM}/cart/${id}`;
-      vm.isLoading = true;
-      this.$http.delete(api).then(res => {
-        console.log("removeCartItem", res.data);
-        vm.isLoading = false;
-        vm.getCart();
-        vm.$bus.$emit("message:push", res.data.message, "success");
-      });
+      const vm = this
+      const api = `${process.env.VUE_APP_PATH}/api/${process.env.VUE_APP_CUSTOM}/cart/${id}`
+      vm.isLoading = true
+      this.$http.delete(api).then((res) => {
+        console.log('removeCartItem', res.data)
+        vm.isLoading = false
+        vm.getCart()
+        vm.$bus.$emit('message:push', res.data.message, 'success')
+      })
     },
     addCouponCode() {
-      const vm = this;
-      const api = `${process.env.VUE_APP_PATH}/api/${process.env.VUE_APP_CUSTOM}/coupon`;
+      const vm = this
+      const api = `${process.env.VUE_APP_PATH}/api/${process.env.VUE_APP_CUSTOM}/coupon`
       const coupon = {
         code: vm.coupon_code
-      };
-      vm.isLoading = true;
-      this.$http.post(api, { data: coupon }).then(res => {
-        console.log("addCouponCode", res.data);
-        vm.$bus.$emit("message:push", res.data.message, "success");
-        vm.isLoading = false;
-        vm.getCart();
-      });
+      }
+      vm.isLoading = true
+      this.$http.post(api, { data: coupon }).then((res) => {
+        console.log('addCouponCode', res.data)
+        vm.$bus.$emit('message:push', res.data.message, 'success')
+        vm.isLoading = false
+        vm.getCart()
+      })
     },
     placeOrder() {
-      const vm = this;
-      const api = `${process.env.VUE_APP_PATH}/api/${process.env.VUE_APP_CUSTOM}/order`;
-      const order = vm.form;
-      vm.isLoading = true;
-      this.$http.post(api, { data: order }).then(res => {
-        console.log("placeOrder", res.data);
+      const vm = this
+      const api = `${process.env.VUE_APP_PATH}/api/${process.env.VUE_APP_CUSTOM}/order`
+      const order = vm.form
+      vm.isLoading = true
+      this.$http.post(api, { data: order }).then((res) => {
+        console.log('placeOrder', res.data)
         if (res.data.success) {
-          vm.$router.push(`/checkout/${res.data.orderId}`);
-          vm.$bus.$emit("message:push", res.data.message, "success");
-          console.log("redirect to checkout page");
-          vm.isLoading = false;
+          vm.$router.push(`/checkout/${res.data.orderId}`)
+          vm.$bus.$emit('message:push', res.data.message, 'success')
+          console.log('redirect to checkout page')
+          vm.isLoading = false
         } else {
-          vm.$bus.$emit("message:push", res.data.message, "danger");
-          console.log("lacking some guest info");
+          vm.$bus.$emit('message:push', res.data.message, 'danger')
+          console.log('lacking some guest info')
         }
-      });
+      })
     }
   },
   created() {
-    this.getCart();
+    this.getCart()
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
