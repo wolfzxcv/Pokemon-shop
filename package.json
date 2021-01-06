@@ -9,15 +9,15 @@
   },
   "dependencies": {
     "@popperjs/core": "^2.4.0",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "bootstrap": "^4.4.1",
     "core-js": "^3.6.4",
     "jquery": "^3.5.0",
     "node-sass": "^4.13.1",
     "sass-loader": "^8.0.2",
     "vee-validate": "^3.2.5",
-    "vue": "^2.6.11",
-    "vue-axios": "^2.1.5",
+    "vue": "^2.6.12",
+    "vue-axios": "^3.2.1",
     "vue-loading-overlay": "^3.3.0",
     "vue-router": "^3.1.5"
   },
